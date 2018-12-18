@@ -1,0 +1,131 @@
+﻿<div>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Payment</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>PaymentNo</label>
+                        <input autofocus class="form-control" type="text" name="PaymentNo" ng-model="vm.payment.paymentNo" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>PaymentDate</label>
+                        <input autofocus class="form-control" type="text" name="Date" ng-model="vm.payment.paymentDate" />
+                    </div>
+                    <div class="form-group">
+                        <label>CustomerName</label>
+                        <select class="form-control" ng-model="vm.payment.custID">
+                            <option ng-repeat="customer in vm.customer" value={{customer.custID}}>{{customer.custName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>StaffName</label>
+                        <select class="form-control" ng-model="vm.payment.userID">
+                            <option ng-repeat="user in vm.users" value={{user.id}}>{{user.userName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>PaymentAmt</label>
+                        <input autofocus class="form-control" type="text" name="PaymentAmt" ng-model="vm.payment.paymentAmt" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary blue" ng-click="vm.save(vm)" ng-show="vm.showSubmit"><i class="fa fa-save"></i><span>Save</span></button>
+                    <button type="submit" class="btn btn-primary blue" ng-click="vm.edit(vm)" ng-show="vm.showEdit"><i class="fa fa-edit"></i><span>Edit</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card main-content">
+            <div class="header">
+                <h2>
+                    @L("Payment")
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <i class="fa fa-spin fa-spinner" ng-if="isTableLoading"></i>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);" class="waves-effect waves-block()" ng-click="vm.refresh();"><i class="material-icons">refresh</i>Refresh</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <!--<th style="text-align:center"></th>
+                            <th style="text-align:center">@L("Mã phiếu thu")</th>
+                            <th style="text-align:center">@L("Ngày TT")</th>
+                            <th style="text-align:center">@L("Mã KH")</th>
+                            <th style="text-align:center">@L("Tên KH")</th>
+                            <th style="text-align:center">@L("Mã NVBH")</th>
+                            <th style="text-align:center">@L("Tên NVBH")</th>
+                            <th style="text-align:center">@L("Số tiền trả")</th>-->
+                            <th>PaymentNo</th>
+                            <th>PaymentDate</th>
+                            <th>CustomerId</th>
+                            <th>CustomerName</th>
+                            <th>UserId</th>
+                            <th>UserName</th>
+                            <th>PaymentAmt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--<tr ng-repeat="tenant in vm.tenants">
+                            <td>{{tenant.tenancyName}}</td>
+                            <td>{{tenant.name}}</td>
+                            <td align="center">
+                                <i class="material-icons" ng-if="tenant.isActive" style="color:green;">check_box</i>
+                                <i class="material-icons" ng-if="!tenant.isActive" style="color:red;">indeterminate_check_box</i>
+                            </td>
+                            <td class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">menu</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);" class="waves-effect waves-block" ng-click="vm.openTenantEditModal(tenant)"><i class="material-icons">create</i>Edit</a></li>
+                                    <li><a href="javascript:void(0);" class="waves-effect waves-block" ng-click="vm.delete(tenant)"><i class="material-icons">delete_sweep</i>Delete</a></li>
+                                </ul>
+                            </td>
+                        </tr>-->
+                        <tr ng-repeat="payment in vm.payments">
+                            <td>{{payment.paymentNo}}</td>
+                            <td>{{payment.paymentDate}}</td>
+                            <td>{{payment.custID}}</td>
+                            <td>{{payment.custName}}</td>
+                            <td>{{payment.userID}}</td>
+                            <td>{{payment.userName}}</td>
+                            <td>{{payment.paymentAmt}}</td>
+                            <td class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">menu</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    @*<li><a href="javascript:void(0);" class="waves-effect waves-block" ng-click="vm.openTenantEditModal(tenant)"><i class="material-icons">create</i>Edit</a></li>*@
+                                    <li><a href="javascript:void(0);" class="waves-effect waves-block" ng-click="vm.openModalforUpdate(payment)"><i class="material-icons"></i>Edit</a></li>
+                                    <li><a href="javascript:void(0);" class="waves-effect waves-block" ng-click="vm.delete(payment.paymentID)"><i class="material-icons"></i>Delete</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button type="button" data-toggle="modal" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" ng-click="vm.openModalforNew()">
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
